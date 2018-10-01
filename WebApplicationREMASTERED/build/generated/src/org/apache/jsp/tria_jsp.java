@@ -4,7 +4,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.jsp.*;
 
-public final class registrarImagen_jsp extends org.apache.jasper.runtime.HttpJspBase
+public final class tria_jsp extends org.apache.jasper.runtime.HttpJspBase
     implements org.apache.jasper.runtime.JspSourceDependent {
 
   private static final JspFactory _jspxFactory = JspFactory.getDefaultFactory();
@@ -48,35 +48,16 @@ public final class registrarImagen_jsp extends org.apache.jasper.runtime.HttpJsp
       out.write("<html>\n");
       out.write("    <head>\n");
       out.write("        <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n");
-      out.write("        <title>Registrar imagen</title>\n");
+      out.write("        <title>Tria que vols fer</title>\n");
       out.write("    </head>\n");
       out.write("    <body>\n");
-      out.write("        <h1>Registrar una imagen</h1> <br>\n");
-      out.write("        \n");
-      out.write("        <form method =\"post\" action=\"/WebApplicationREMASTERED/registrarImagen\" enctype=\"multipart/form-data\">\n");
-      out.write("            Titol\n");
-      out.write("            <input type=\"text\" name=\"titol\" placeholder=\"Titol de la foto\">\n");
-      out.write("            \n");
-      out.write("            <div>Descripcio</div>\n");
-      out.write("            <input type =\"text\" name=\"descripcio\" placeholder=\"Descripció breu de la foto\">\n");
-      out.write("            \n");
-      out.write("            <div>Paraules clau</div>\n");
-      out.write("            <input type=\"text\" name=\"paraulesclau\" placeholder=\"Paraules clau de la foto\">\n");
-      out.write("            \n");
-      out.write("            <div>Autor</div>\n");
-      out.write("            <input type =\"text\" name=\"author\" placeholder=\"Autor de la foto\">\n");
-      out.write("            \n");
-      out.write("            <div>Data creacio</div>\n");
-      out.write("            <input type=\"date\" name=\"creationdate\">\n");
-      out.write("            \n");
-      out.write("            <div>Fitxer</div>\n");
-      out.write("            <input type=\"file\" name=\"imatge\">\n");
-      out.write("            <input type=\"submit\" name=\"Submit\" value=\"Upload\">\n");
-      out.write("            \n");
-      out.write("                     \n");
-      out.write("        </form>\n");
+      out.write("        <h1>Imatge pujada satisfactoriament</h1>\n");
+      out.write("        <br><br>\n");
+      out.write("        <a href=\"registrarImagen.jsp\"<h2> Torna a pujar una imatge </h2> </a>\n");
+      out.write("        <br><br>\n");
+      out.write("        <a href=\"menu.jsp\"<h2> Torna al menu principal </h2> </a>\n");
       out.write("    </body>\n");
-      out.write("</html>");
+      out.write("</html>\n");
     } catch (Throwable t) {
       if (!(t instanceof SkipPageException)){
         out = _jspx_out;

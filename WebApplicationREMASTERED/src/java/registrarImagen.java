@@ -6,8 +6,14 @@
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.FileOutputStream;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,14 +22,18 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.sql.PreparedStatement;
-import java.io.File;
+import java.lang.Object; 
+import javax.servlet.http.Part;
 
 /**
  *
  * @author adri
  */
 @WebServlet(name = "registrarImagen", urlPatterns = {"/registrarImagen"})
+@MultipartConfig
 public class registrarImagen extends HttpServlet {
 
     /**
@@ -35,64 +45,119 @@ public class registrarImagen extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+      private final static Logger LOGGER = 
+            Logger.getLogger(registrarImagen.class.getCanonicalName());
+    private String getFileName(final Part part) {
+    final String partHeader = part.getHeader("content-disposition");
+    LOGGER.log(Level.INFO, "Part Header = {0}", partHeader);
+    for (String content : part.getHeader("content-disposition").split(";")) {
+        if (content.trim().startsWith("filename")) {
+            return content.substring(
+                    content.indexOf('=') + 1).trim().replace("\"", "");
+        }
+    }
+    return null;
+}
+    
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
+        PrintWriter out2 = response.getWriter();
         Connection connection = null;
         try {
             /* TODO output your page here. You may use following sample code. */
+             Class.forName("org.sqlite.JDBC");
+             connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\aleix\\Desktop\\Escritorio\\pro2\\JavaMasterRace\\NetBeans\\LIBRERIA.db");
+             final String path = "C:\\Users\\aleix\\Desktop\\Escritorio\\pro2\\JavaMasterRace\\NetBeans\\WebApplicationREMASTERED\\web\\images";
+             final Part filePart = request.getPart("imatge");
+             final String fileName = getFileName(filePart);
+             //out.println("El nom es:" + fileName );
+             //File fileSaveDir = new File(path);
+             
+             PreparedStatement prp = connection.prepareStatement("select * from imatges where nom=?");
+             
+             prp.setString(1,fileName);
+             ResultSet rs = prp.executeQuery();
+             
+             
+            if(!rs.next()){
+                OutputStream out = null;
+                InputStream filecontent = null;
+                final PrintWriter writer = response.getWriter();
+             try {
+               
+                    out = new FileOutputStream(new File(path + File.separator
+                            + fileName));
+                    filecontent = filePart.getInputStream();
+
+                    int read = 0;
+                    final byte[] bytes = new byte[1024];
+
+                    while ((read = filecontent.read(bytes)) != -1) {
+                        out.write(bytes, 0, read);
+                    }
+                    writer.println("New file " + fileName + " created at " + path);
+                    LOGGER.log(Level.INFO, "File{0}being uploaded to {1}", 
+                            new Object[]{fileName, path});
+                } catch (FileNotFoundException fne) {
+                    writer.println("You either did not specify a file to upload or are "
+                            + "trying to upload a file to a protected or nonexistent "
+                            + "location.");
+                    writer.println("<br/> ERROR: " + fne.getMessage());
+
+                    LOGGER.log(Level.SEVERE, "Problems during file upload. Error: {0}", 
+                            new Object[]{fne.getMessage()});
+                } finally {
+                    if (out != null) {
+                        out.close();
+                    }
+                    if (filecontent != null) {
+                        filecontent.close();
+                    }
+                    if (writer != null) {
+                        writer.close();
+                    }
+                }
+            }
             
             String titulo = request.getParameter("titol");
             String desc = request.getParameter("descripcio");
             String pclau = request.getParameter("paraulesclau");
             String autor = request.getParameter("author");
             String data = request.getParameter("creationdate");
-            //String nom = request.getParameter("name");
-            String nom_image = request.getParameter("imatge");
             java.util.Date d = new java.util.Date();
-            
-            String path = "C:\\Users\\aleix\\Desktop\\Escritorio\\pro2\\JavaMasterRace\\NetBeans\\WebApplicationREMASTERED\\web\\images";
-            
-            out.println("Esto es el nombre: "+nom_image);
-            
-            Class.forName("org.sqlite.JDBC");
-            
-            connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\aleix\\Desktop\\Escritorio\\pro2\\JavaMasterRace\\NetBeans\\LIBRERIA.db");
-            
-            
+           
             PreparedStatement statement = connection.prepareStatement("select MAX(id_imatge) from imatges");
+         
+            ResultSet rs2 = statement.executeQuery();
+            int id_imatge = 0; 
+            if(rs2.next()) id_imatge = rs2.getInt(1);
             
-             ResultSet rs = statement.executeQuery();
-             out.println("Mi id= "+ rs.getInt(1));
-             if(rs.next()) {
-                 int id_imatge = rs.getInt(1);
-                 out.println("Mi id = "+ id_imatge);
-             } 
-            // out.println("Mi id"+ rs.getInt(1));
-             int id_imatge = rs.getInt(1);
-             //out.println("Mi id"+ id_imatge);
+            else response.sendRedirect("error.jsp");
+            out2.println("El id es: " + id_imatge);
              
             PreparedStatement statement2 = connection.prepareStatement("insert into imatges values(?,?,?,?,?,?,?,?)");
             
+                out2.println("El id es: " + id_imatge);    
             statement2.setInt(1,++id_imatge);
             statement2.setString(2,titulo);
             statement2.setString(3,desc);
             statement2.setString(4,pclau);
             statement2.setString(5,autor);
             statement2.setString(6,data);
-            statement2.setDate(7,d);
-            statement2.setString(8,path); 
+            statement2.setString(7,d.toString());
+            statement2.setString(8,fileName); 
+            out2.println("El id es: " + id_imatge);
+            int fet = statement2.executeUpdate();
+            out2.println("El id es: " + id_imatge);
+            out2.println("FEt val: "+ fet);
             
-            ResultSet rs2 = statement2.executeQuery();
-                    
-            
-            
-            
-            
-            
-            
-        }
+            if(fet > 0)out2.println("<html><body><h1>La Imatge s'ha pujat satisfactoriament</h1></body></html>");
+
+    }
+    
+        
         catch(SQLException e)
         {
           System.err.println(e.getMessage());

@@ -12,17 +12,18 @@
         <title>Menu</title>
     </head>
     <body>
+        <h1>Menu Principal</h1>
         <br>
         <br>
         <br>
-        <a href="registrarImagen.jsp"><h1>Registrar una imagen</h1></a>
+        <a href="registrarImagen.jsp"><h2>Registrar una imagen</h2></a>
         <%--<a href="modificarImagen.jsp"><h1>Modificar una imagen</h1></a>--%>
         <br>
         <br>
-        <a href="buscarImagen.jsp"><h1>Buscar una imagen</h1></a>
+        <a href="buscarImagen.jsp"><h2>Buscar una imagen</h2></a>
         <br>
         <br>
-        <a href="list.jsp"><h1>Listar imagenes</h1></a>
+        <a href="list.jsp"><h2>Listar imagenes</h2></a>
         <br>
         <br>      
     </body>

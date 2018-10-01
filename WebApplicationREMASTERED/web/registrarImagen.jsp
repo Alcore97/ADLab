@@ -16,22 +16,22 @@
         
         <form method ="post" action="/WebApplicationREMASTERED/registrarImagen" enctype="multipart/form-data">
             Titol
-            <input type="text" name="titol" placeholder="Titol de la foto">
+            <input type="text" name="titol" placeholder="Titol de la foto" required>
             
             <div>Descripcio</div>
-            <input type ="text" name="descripcio" placeholder="Descripció breu de la foto">
+            <input type ="text" name="descripcio" placeholder="Descripció breu de la foto" required>
             
             <div>Paraules clau</div>
-            <input type="text" name="paraulesclau" placeholder="Paraules clau de la foto">
+            <input type="text" name="paraulesclau" placeholder="Paraules clau de la foto" required>
             
             <div>Autor</div>
-            <input type ="text" name="author" placeholder="Autor de la foto">
+            <input type ="text" name="author" placeholder="Autor de la foto" required>
             
             <div>Data creacio</div>
-            <input type="date" name="creationdate">
+            <input type="date" name="creationdate" required>
             
             <div>Fitxer</div>
-            <input type="file" name="imatge">
+            <input type="file" name="imatge" required>
             <input type="submit" name="Submit" value="Upload">
             
                      

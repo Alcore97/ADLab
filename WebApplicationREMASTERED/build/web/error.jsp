@@ -14,5 +14,7 @@
     <body>
         <h1>Ha habido un error!</h1>
         <a href="index.jsp"> Tornar a login </a>
+        <br><br>
+        <a href="menu.jsp"> Tornar a menu</a>
     </body>
 </html>
