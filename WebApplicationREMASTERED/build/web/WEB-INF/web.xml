@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <servlet>
+        <servlet-name>registrarImagen</servlet-name>
+        <servlet-class>registrarImagen</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>buscarImagen</servlet-name>
+        <servlet-class>buscarImagen</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FileUploadServlet</servlet-name>
+        <servlet-class>FileUploadServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>modificarImagen</servlet-name>
+        <servlet-class>modificarImagen</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>registrarImagen</servlet-name>
+        <url-pattern>/registrarImagen</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>buscarImagen</servlet-name>
+        <url-pattern>/buscarImagen</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FileUploadServlet</servlet-name>
+        <url-pattern>/FileUploadServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>modificarImagen</servlet-name>
+        <url-pattern>/modificarImagen</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+</web-app>
