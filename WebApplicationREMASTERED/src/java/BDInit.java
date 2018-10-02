@@ -1,11 +1,3 @@
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -24,8 +16,8 @@ import java.sql.PreparedStatement;
  *
  * @author adri
  */
-@WebServlet(name = "login", urlPatterns = {"/login"})
-public class login extends HttpServlet {
+@WebServlet(name = "BDInit", urlPatterns = {"/BDInit"})
+public class BDInit extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,26 +32,27 @@ public class login extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        
         Connection connection = null;
+        
         try {
-            /* TODO output your page here. You may use following sample code. */
-                       
             Class.forName("org.sqlite.JDBC");
-           
-            String u = request.getParameter("user");
-            String p = request.getParameter("pass");
             
             connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\aleix\\Desktop\\Escritorio\\pro2\\JavaMasterRace\\NetBeans\\LIBRERIA.db");
             
-            PreparedStatement statement2 = connection.prepareStatement("select * from usuaris where id_usuario = ? and password = ?");
-            statement2.setString(1,u);
-            statement2.setString(2,p);
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(30);
             
-            ResultSet rs = statement2.executeQuery();
-            
-            if(!rs.next()) response.sendRedirect("error?tipus=loginfail");
-            else response.sendRedirect("menu.jsp");
+            statement.executeUpdate("drop table if exists usuaris");
+            statement.executeUpdate("drop table if exists imatges");
+                                
+            statement.executeUpdate("create table usuaris (id_usuario string primary key, password string)");
+            statement.executeUpdate("insert into usuaris values('adri','chuf')");
+            statement.executeUpdate("insert into usuaris values('aleix','cusetes1719')");
+            statement.executeUpdate("insert into usuaris values('silvia','unzero')");
+
+            statement.executeUpdate("create table imatges (id_imatge integer primary key, titol_imatge string, descripcio string,"
+                    + "paraula_clau string, autor string, data_creacio string, data_pujada string, nom string)");
+            statement.executeUpdate("insert into imatges  values(1,'exemple', 'Aixo es un exemple', 'exe','adri','01-10-2018','01-10-2018','ola')");
         }
         catch(SQLException e)
         {
@@ -80,9 +73,7 @@ public class login extends HttpServlet {
             System.err.println(e.getMessage());
           }
         }
-       }
-    
-
+    }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -123,3 +114,4 @@ public class login extends HttpServlet {
     }// </editor-fold>
 
 }
+

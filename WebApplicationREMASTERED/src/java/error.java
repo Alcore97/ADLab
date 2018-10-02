@@ -1,11 +1,3 @@
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -24,8 +16,8 @@ import java.sql.PreparedStatement;
  *
  * @author adri
  */
-@WebServlet(name = "login", urlPatterns = {"/login"})
-public class login extends HttpServlet {
+@WebServlet(name = "error", urlPatterns = {"/error"})
+public class error extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,47 +33,27 @@ public class login extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         
-        Connection connection = null;
-        try {
-            /* TODO output your page here. You may use following sample code. */
-                       
-            Class.forName("org.sqlite.JDBC");
-           
-            String u = request.getParameter("user");
-            String p = request.getParameter("pass");
+        if(request.getParameter("tipus").equals("loginfail")) {
             
-            connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\aleix\\Desktop\\Escritorio\\pro2\\JavaMasterRace\\NetBeans\\LIBRERIA.db");
-            
-            PreparedStatement statement2 = connection.prepareStatement("select * from usuaris where id_usuario = ? and password = ?");
-            statement2.setString(1,u);
-            statement2.setString(2,p);
-            
-            ResultSet rs = statement2.executeQuery();
-            
-            if(!rs.next()) response.sendRedirect("error?tipus=loginfail");
-            else response.sendRedirect("menu.jsp");
+            out.println("<html> <body>"
+                    + "<h2>Error: L'usuari o contrasenya introduits son incorrectes</h2>"
+                    + "<br>"
+                    + "<a href='login.jsp'>Tornar a login</a>"
+                    + "<br>"
+                    + "</body></html>");
         }
-        catch(SQLException e)
-        {
-          System.err.println(e.getMessage());
-        } catch (ClassNotFoundException e) {
-            System.err.println(e.getMessage());
-        }   
-        finally
-        {
-          try
-          {
-            if(connection != null)
-              connection.close();
-          }
-          catch(SQLException e)
-          {
-            // connection close failed.
-            System.err.println(e.getMessage());
-          }
+        
+        else if(request.getParameter("tipus").equals("tornamenu")) {
+            
+            out.println("<html> <body>"
+                    + "<h2>Hi ha hagut un error!</h2>"
+                    + "<br>"
+                    + "<a href='menu.jsp'>Tornar al menu</a>"
+                    + "<br>"
+                    + "</body></html>");
         }
-       }
-    
+        
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

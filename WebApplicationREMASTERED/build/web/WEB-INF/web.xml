@@ -16,6 +16,14 @@
         <servlet-name>modificarImagen</servlet-name>
         <servlet-class>modificarImagen</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>error</servlet-name>
+        <servlet-class>error</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BDInit</servlet-name>
+        <servlet-class>BDInit</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>registrarImagen</servlet-name>
         <url-pattern>/registrarImagen</url-pattern>
@@ -31,6 +39,14 @@
     <servlet-mapping>
         <servlet-name>modificarImagen</servlet-name>
         <url-pattern>/modificarImagen</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>error</servlet-name>
+        <url-pattern>/error</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BDInit</servlet-name>
+        <url-pattern>/BDInit</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

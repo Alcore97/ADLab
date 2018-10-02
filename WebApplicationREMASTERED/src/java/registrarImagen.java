@@ -100,9 +100,9 @@ public class registrarImagen extends HttpServlet {
          
             ResultSet rs2 = statement.executeQuery();
             int id_imatge = 0; 
-            if(rs2.next()) id_imatge = rs2.getInt(1);
             
-            else response.sendRedirect("error.jsp");
+            if(rs2.next()) id_imatge = rs2.getInt(1);            
+            else response.sendRedirect("error?tipus=tornamenu");
             System.out.println("El id es: " + id_imatge);
              
             PreparedStatement statement2 = connection.prepareStatement("insert into imatges values(?,?,?,?,?,?,?,?)");
@@ -119,9 +119,15 @@ public class registrarImagen extends HttpServlet {
             //writer.println("El id es: " + id_imatge);
             statement2.executeUpdate();
             //writer.println("El id es: " + id_imatge);
-            response.sendRedirect("menu.jsp?page=registerOK");
+           // response.sendRedirect("error?tipus=tornamenu");
             
-            //writer.println("<html><body><h1>La Imatge s'ha pujat satisfactoriament</h1></body></html>");
+            writer.println("<html> <body> "
+                    + "<h2>L'imatge s'ha pujat satisfactoriament</h2> "
+                    + "<br>"
+                    + "<a href='menu.jsp'>Tornar al menu</a>"
+                    + "<br> "
+                    + "<a href='registrarImagen.jsp'>Registrar otra imagen</a>"
+                    + "</body></html>");
 
         }
         catch(SQLException e){

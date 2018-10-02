@@ -76,7 +76,7 @@ public class buscarImagen extends HttpServlet {
             ResultSet rs = statement.executeQuery("peticion");
             
             if(rs.next()){} //mostra les imatges en forma de llista
-            else response.sendRedirect("menu.jsp?page=Notrobat");
+            else response.sendRedirect("error.jsp?page=Notrobat");
          
            
             
