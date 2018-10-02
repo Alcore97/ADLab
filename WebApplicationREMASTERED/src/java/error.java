@@ -53,6 +53,18 @@ public class error extends HttpServlet {
                     + "</body></html>");
         }
         
+        else if(request.getParameter("tipus").equals("Notrobat")) {
+            
+            out.println("<html> <body>"
+                    + "<h2>Imatge no trobada!</h2>"
+                    + "<br>"
+                    + "<a href='buscarImagen.jsp'>Torna a fer una cerca</a>"
+                    + "<br>"
+                    + "<a href='menu.jsp'>Tornar al menu</a>"
+                    + "<br>"
+                    + "</body></html>");
+        }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

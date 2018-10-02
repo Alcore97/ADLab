@@ -8,8 +8,14 @@
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.FileOutputStream;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,13 +24,17 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.sql.PreparedStatement;
-
+import java.lang.Object; 
+import javax.servlet.http.Part;
 /**
  *
  * @author adri
  */
 @WebServlet(name = "buscarImagen", urlPatterns = {"/buscarImagen"})
+@MultipartConfig
 public class buscarImagen extends HttpServlet {
 
     /**
@@ -40,7 +50,6 @@ public class buscarImagen extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        
         Connection connection = null;
         try {
             /* TODO output your page here. You may use following sample code. */
@@ -50,33 +59,37 @@ public class buscarImagen extends HttpServlet {
             connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\aleix\\Desktop\\Escritorio\\pro2\\JavaMasterRace\\NetBeans\\LIBRERIA.db");
             
             String peticion="select * from imatges where 1=1";
-            String t = request.getParameter("titol_imatge");
+            //out.println("La meva peticio es: "+  peticion);
+            String t = request.getParameter("titol");
             String d = request.getParameter("descripcio");
-            String p = request.getParameter("paraules_clau");
-            String a = request.getParameter("autor");
-            String n = request.getParameter("nom");
+            String p = request.getParameter("paraulesclau");
+            String a = request.getParameter("author");
+            String n = request.getParameter("fitxer");
+           // out.println("La meva peticio es: "+  peticion +" amb el nom: "+ t +"amb la descripcio: " + d + "amb la paraulaclau: " + p);
            
-            Statement statement = connection.prepareStatement("peticion");
+           
             if(!t.isEmpty()){
-               peticion += " and titol_imatge = ?";
-                if(!d.isEmpty()){
-                    peticion += " and descripcio = ?";
-                    if(!p.isEmpty()){
-                        peticion += " and paraules_clau = ?";
-                        if(!a.isEmpty()){
-                            peticion += " and autor = ?";
-                            if(!n.isEmpty()){
-                               peticion += " and nom = ?";
-                            }
-                        }
-                    }
-                }
+                peticion += " and titol_imatge = ?";
             }
+            if(!d.isEmpty()){
+                peticion += " and descripcio = ?";
+                }
+            if(!p.isEmpty()){
+                peticion += " and paraules_clau = ?";
+                    }
+            if(!a.isEmpty()){
+                peticion += " and autor = ?";
+                        }
+            if(!n.isEmpty()){
+                 peticion += " and nom = ?";
+                            }
+            out.println("La meva peticio es: "+  peticion);
+            Statement statement = connection.prepareStatement("peticion");
          
             ResultSet rs = statement.executeQuery("peticion");
             
             if(rs.next()){} //mostra les imatges en forma de llista
-            else response.sendRedirect("error.jsp?page=Notrobat");
+            else response.sendRedirect("error.jsp?tipus=Notrobat");
          
            
             
