@@ -4,7 +4,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.jsp.*;
 
-public final class menu_jsp extends org.apache.jasper.runtime.HttpJspBase
+public final class login_jsp extends org.apache.jasper.runtime.HttpJspBase
     implements org.apache.jasper.runtime.JspSourceDependent {
 
   private static final JspFactory _jspxFactory = JspFactory.getDefaultFactory();
@@ -48,27 +48,23 @@ public final class menu_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("<html>\n");
       out.write("    <head>\n");
       out.write("        <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n");
-      out.write("        <title>Menu</title>\n");
+      out.write("        <title>JSP Page</title>\n");
       out.write("    </head>\n");
       out.write("    <body>\n");
-      out.write("        <h1>Menu Principal</h1>\n");
-      out.write("        <br>\n");
-      out.write("        <br>\n");
+      out.write("        <h1>Benvinguts a la pagina </h1>\n");
+      out.write("        <h3>Introduiu les dades per entrar</h3>\n");
       out.write("        <br>\n");
       out.write("        ");
-System.out.println("Hola");
       out.write("\n");
-      out.write("        <a href=\"registrarImagen.jsp\"><h2>Registrar una imagen</h2></a>\n");
-      out.write("        ");
-      out.write("\n");
-      out.write("        <br>\n");
-      out.write("        <br>\n");
-      out.write("        <a href=\"buscarImagen.jsp\"><h2>Buscar una imagen</h2></a>\n");
-      out.write("        <br>\n");
-      out.write("        <br>\n");
-      out.write("        <a href=\"list.jsp\"><h2>Listar imagenes</h2></a>\n");
-      out.write("        <br>\n");
-      out.write("        <br>      \n");
+      out.write("        <form name=\"form1\" action=\"/WebApplicationREMASTERED/login\" method=\"post\">\n");
+      out.write("            <div>Username</div>\n");
+      out.write("            <input type =\"text\" name=\"user\" placeholder=\"Enter username\">\n");
+      out.write("            \n");
+      out.write("            <div>Password</div>\n");
+      out.write("            <input type =\"password\" name =\"pass\" placeholder =\"Enter password\">\n");
+      out.write("            \n");
+      out.write("            <input type =\"submit\" value=\"Login\">\n");
+      out.write("        </form>\n");
       out.write("    </body>\n");
       out.write("</html>");
     } catch (Throwable t) {

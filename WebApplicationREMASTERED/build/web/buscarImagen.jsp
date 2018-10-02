@@ -16,7 +16,7 @@
         <br><br>
         <h2>Elige los campos por los que deseas buscar la imagen</h2>
         <form method ="post" action="/WebApplicationREMASTERED/buscarImagen" enctype="multipart/form-data">
-            Titol
+            <div>Titol</div>
             <input type="text" name="titol" placeholder="Titol de la foto">
             
             <div>Descripcio</div>

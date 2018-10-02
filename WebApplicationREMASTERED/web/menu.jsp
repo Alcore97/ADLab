@@ -12,6 +12,9 @@
         <title>Menu</title>
     </head>
     <body>
+        <%if(request.getParameter("page").equals("registerOK")){
+            out.println("<h1>Menu Principal</h1>");
+}%>
         <h1>Menu Principal</h1>
         <br>
         <br>

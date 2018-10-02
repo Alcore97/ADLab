@@ -61,7 +61,7 @@ public class login extends HttpServlet {
 
             statement.executeUpdate("create table imatges (id_imatge integer ,titol_imatge string primary key, descripcio string,"
                     + "paraula_clau string, autor string, data_creacio string, data_pujada string, nom string)");
-            statement.executeUpdate("insert into imatges  values('1','1', '22', 'IBE','BCN','09:00','SVQ','10:25')");
+            statement.executeUpdate("insert into imatges  values(1,'1', '22', 'IBE','BCN','09:00','SVQ','10:25')");
             
             String u = request.getParameter("user");
             String p = request.getParameter("pass");

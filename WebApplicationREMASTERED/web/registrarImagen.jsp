@@ -16,7 +16,7 @@
         
         <form method ="post" action="/WebApplicationREMASTERED/registrarImagen" enctype="multipart/form-data">
             Titol
-            <input type="text" name="titol" placeholder="Titol de la foto" required>
+            <input type="text" name="titol" placeholder="Titol de la foto" >
             
             <div>Descripcio</div>
             <input type ="text" name="descripcio" placeholder="Descripció breu de la foto" required>

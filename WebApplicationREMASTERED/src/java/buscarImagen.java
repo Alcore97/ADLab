@@ -1,8 +1,10 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -20,7 +22,7 @@ import java.sql.PreparedStatement;
 
 /**
  *
- * @author aleix
+ * @author adri
  */
 @WebServlet(name = "buscarImagen", urlPatterns = {"/buscarImagen"})
 public class buscarImagen extends HttpServlet {
@@ -37,19 +39,70 @@ public class buscarImagen extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        PrintWriter out = response.getWriter();
+        
+        Connection connection = null;
+        try {
             /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet buscarImagen</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet buscarImagen at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+                       
+            Class.forName("org.sqlite.JDBC");
+            
+            connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\aleix\\Desktop\\Escritorio\\pro2\\JavaMasterRace\\NetBeans\\LIBRERIA.db");
+            
+            String peticion="select * from imatges where 1=1";
+            String t = request.getParameter("titol_imatge");
+            String d = request.getParameter("descripcio");
+            String p = request.getParameter("paraules_clau");
+            String a = request.getParameter("autor");
+            String n = request.getParameter("nom");
+           
+            Statement statement = connection.prepareStatement("peticion");
+            if(!t.isEmpty()){
+               peticion += " and titol_imatge = ?";
+                if(!d.isEmpty()){
+                    peticion += " and descripcio = ?";
+                    if(!p.isEmpty()){
+                        peticion += " and paraules_clau = ?";
+                        if(!a.isEmpty()){
+                            peticion += " and autor = ?";
+                            if(!n.isEmpty()){
+                               peticion += " and nom = ?";
+                            }
+                        }
+                    }
+                }
+            }
+         
+            ResultSet rs = statement.executeQuery("peticion");
+            
+            if(rs.next()){} //mostra les imatges en forma de llista
+            else response.sendRedirect("menu.jsp?page=Notrobat");
+         
+           
+            
+            
         }
-    }
+        catch(SQLException e)
+        {
+          System.err.println(e.getMessage());
+        } catch (ClassNotFoundException e) {
+            System.err.println(e.getMessage());
+        }   
+        finally
+        {
+          try
+          {
+            if(connection != null)
+              connection.close();
+          }
+          catch(SQLException e)
+          {
+            // connection close failed.
+            System.err.println(e.getMessage());
+          }
+        }
+       }
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
