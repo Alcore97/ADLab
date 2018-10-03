@@ -58,7 +58,7 @@ public class buscarImagen extends HttpServlet {
             
             connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\aleix\\Desktop\\Escritorio\\pro2\\JavaMasterRace\\NetBeans\\LIBRERIA.db");
             
-            String peticion="select * from imatges where 1=1";
+            String peticion="select nom,autor from imatges where 1=1";
             //out.println("La meva peticio es: "+  peticion);
             String t = request.getParameter("titol");
             String d = request.getParameter("descripcio");
@@ -67,37 +67,99 @@ public class buscarImagen extends HttpServlet {
             String n = request.getParameter("fitxer");
            // out.println("La meva peticio es: "+  peticion +" amb el nom: "+ t +"amb la descripcio: " + d + "amb la paraulaclau: " + p);
            
-           
+            boolean b1,b2,b3,b4,b5;
+            b1 = b2 = b3 = b4 = b5 = false;
+            int cont = 0;         
             if(!t.isEmpty()){
                 peticion += " and titol_imatge = ?";
+                b1 = true; 
             }
             if(!d.isEmpty()){
                 peticion += " and descripcio = ?";
+                b2 = true; 
                 }
             if(!p.isEmpty()){
-                peticion += " and paraules_clau = ?";
+                peticion += " and paraula_clau = ?";
+                b3 = true; 
                     }
             if(!a.isEmpty()){
                 peticion += " and autor = ?";
+                b4 = true; 
                         }
             if(!n.isEmpty()){
                  peticion += " and nom = ?";
+                 b5 = true; 
                             }
-            out.println("La meva peticio es: "+  peticion);
-            Statement statement = connection.prepareStatement("peticion");
-         
-            ResultSet rs = statement.executeQuery("peticion");
+            //out.println("La meva peticio es: "+  peticion);
+            //out.println("HOLA");
+            PreparedStatement statement = connection.prepareStatement(peticion);
             
-            if(rs.next()){} //mostra les imatges en forma de llista
-            else response.sendRedirect("error.jsp?tipus=Notrobat");
+           //out.println("HOLA");
+           if(b1){
+              ++cont;
+               statement.setString(cont,t); 
+           }
+           if(b2){
+               ++cont;
+                statement.setString(cont,d);
+           }
+           if(b3){
+              ++cont;
+               statement.setString(cont,p); 
+           }
+           if(b4){
+               ++cont;
+                statement.setString(cont,a);
+           }
+           if(b5){
+              ++cont;
+               statement.setString(cont,n); 
+           }
+          // out.println("HOLA");
+            ResultSet rs = statement.executeQuery();
+            //out.println("El meu rs.next es: " + rs.next());
+            
+           if(rs.isAfterLast()) response.sendRedirect("error?tipus=Notrobat");
+           else{
+                //out.println("HOLA");
+                out.println("<html><body>"
+                        + "<h1 style='text-align:center;'> LA MEVA CERCA </h1>"
+                            + "<table style='width:100%;text-align:center;'>"
+                            + "<tr>"
+                            + "<th>Nom imatge</th>"
+                            + "<th>Link</th>"
+                            + "<th>Modificar</th>"
+                            + "</tr>");
+                //out.println("El meu rs.next es: " + rs.next());
+                //if(rs.isAfterLast())
+                
+               // out.println("El meu rs.next es: " + bool);
+                
+                while(rs.next()){
+                    //out.println("HOLA");
+                    String aut = rs.getString("autor");                      
+                        
+                            out.println("<html><body>"
+                            + "<tr>"
+                            + "<td style='text-align:center;'>" + rs.getString("nom") + "</td>"
+                            + "<td style='text-align:center;'> <a href='.\\images\\" + rs.getString("nom") + "'>Link</a> </td>"
+                            + "<td style='text-align:center;'> <a href='.\\modificarImagen.jsp'>Modificar imatge</a> </td>");
+                } //mostra les imatges en forma de llista
+            }
+         out.println("<html> <body>"
+                 + "</table>"
+                 + "<a href='menu.jsp'> Tornar a menu!</a>"
+                 + "</body> </html>");
          
+        
            
             
-            
+      
         }
         catch(SQLException e)
         {
           System.err.println(e.getMessage());
+          out.println("hola");
         } catch (ClassNotFoundException e) {
             System.err.println(e.getMessage());
         }   

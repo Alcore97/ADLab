@@ -12,10 +12,10 @@
         <title>Busca una imagen</title>
     </head>
     <body>
-        <h1>Busca una imagen ya registrada</h1>
+        <h1>Modifica una imagen ya registrada</h1>
         <br><br>
         <h2>Elige los campos por los que deseas modificar la imagen</h2>
-        <form method ="post" action="/WebApplicationREMASTERED/buscarImagen" enctype="multipart/form-data">
+        <form method ="post" action="/WebApplicationREMASTERED/modificarImagen" enctype="multipart/form-data">
             <div>Titol</div>
             <input type="text" name="titol" placeholder="Titol de la foto">
             

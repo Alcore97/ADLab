@@ -95,7 +95,7 @@ public class registrarImagen extends HttpServlet {
             String autor = request.getParameter("author");
             String data = request.getParameter("creationdate");
             java.util.Date d = new java.util.Date();
-            writer.println("El nom es: " + titulo);
+            //writer.println("El nom es: " + titulo);
             PreparedStatement statement = connection.prepareStatement("select MAX(id_imatge) from imatges");
          
             ResultSet rs2 = statement.executeQuery();

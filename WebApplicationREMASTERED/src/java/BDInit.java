@@ -52,7 +52,7 @@ public class BDInit extends HttpServlet {
 
             statement.executeUpdate("create table imatges (id_imatge integer primary key, titol_imatge string, descripcio string,"
                     + "paraula_clau string, autor string, data_creacio string, data_pujada string, nom string)");
-            statement.executeUpdate("insert into imatges  values(1,'exemple', 'Aixo es un exemple', 'exe','adri','01-10-2018','01-10-2018','ola')");
+           // statement.executeUpdate("insert into imatges  values(1,'exemple', 'Aixo es un exemple', 'exe','adri','01-10-2018','01-10-2018','ola')");
         }
         catch(SQLException e)
         {
